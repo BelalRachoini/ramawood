@@ -10,6 +10,7 @@ const translations = {
     'nav-contact': 'Contact',
 
     // Hero Section
+        'nav-assortment': 'Assortment',
     'hero-title': 'Trusted Swedish Company for Global Wood Trading',
     'hero-subtitle': 'Premium quality wood products with over 10 years of expertise in international trading',
     'hero-cta-primary': 'Explore Products',
@@ -79,6 +80,7 @@ const translations = {
     'nav-team': 'الفريق',
     'nav-impact': 'تأثيرنا',
     'nav-contact': 'اتصل بنا',
+        'nav-assortment': 'تشكيلة الأخشاب',
 
     // Hero Section
     'hero-title': 'شركة سويدية موثوقة لتجارة الأخشاب العالمية',
@@ -150,6 +152,7 @@ const translations = {
     'nav-team': 'Team',
     'nav-impact': 'Påverkan',
     'nav-contact': 'Kontakt',
+        'nav-assortment': 'Sortiment',
 
     // Hero Section
     'hero-title': 'Pålitligt svenskt företag för global trähandel',
