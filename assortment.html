@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timber Assortment | RamaWood</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cairo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* ── Assortment Page Specific Styles ── */
+    :root {
+      --wood-brown: hsl(29, 69%, 36%);
+      --wood-dark: hsl(35, 56%, 20%);
+      --forest-green: hsl(120, 25%, 25%);
+      --forest-light: hsl(120, 50%, 35%);
+      --wood-beige: hsl(60, 56%, 91%);
+      --wood-peru: hsl(30, 59%, 53%);
+      --muted: hsl(60, 4.8%, 95.9%);
+      --muted-foreground: hsl(25, 5.3%, 44.7%);
+      --border: hsl(20, 5.9%, 90%);
+      --foreground: hsl(20, 14.3%, 4.1%);
+      --background: hsl(0, 0%, 100%);
+    }
+
+    /* ── Sticky Lang Toggle ── */
+    .lang-toggle-bar {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      background: var(--muted);
+      padding: 5px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      gap: 4px;
+    }
+    [dir="rtl"] .lang-toggle-bar { right: auto; left: 20px; }
+    .lang-toggle-bar button {
+      background: none; border: none; padding: 8px 16px;
+      border-radius: 15px; cursor: pointer; font-weight: 600;
+      font-size: 0.9rem; color: var(--muted-foreground); transition: all 0.3s ease;
+    }
+    .lang-toggle-bar button.active,
+    .lang-toggle-bar button:hover {
+      background: var(--wood-brown); color: white; transform: translateY(-1px);
+    }
+
+    /* ── Hero ── */
+    .assortment-hero {
+      min-height: 55vh;
+      background: linear-gradient(135deg, var(--wood-dark) 0%, var(--forest-green) 50%, var(--wood-brown) 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 40px 80px;
+      position: relative; overflow: hidden;
+    }
+    .assortment-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="wood" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0 10 Q5 5 10 10 Q15 15 20 10" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/></pattern></defs><rect width="200" height="200" fill="url(%23wood)"/></svg>');
+    }
+    .assortment-hero .hero-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+    .assortment-hero h1 {
+      font-size: 3.5rem; font-weight: 800; color: white;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5); margin-bottom: 24px; line-height: 1.15;
+    }
+    .assortment-hero p {
+      font-size: 1.2rem; color: rgba(255,255,255,0.88);
+      max-width: 680px; margin: 0 auto 28px; line-height: 1.7;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .pefc-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 30px;
+      padding: 8px 20px; color: rgba(255,255,255,0.9); font-size: 0.88rem; font-weight: 500;
+    }
+    .pefc-badge i { color: #7ec850; }
+
+    /* ── Category Nav Cards ── */
+    .cat-nav { background: var(--wood-beige); padding: 60px 0; }
+    .cat-nav .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+    .cat-nav h2 {
+      text-align: center; font-size: 1.4rem; font-weight: 700;
+      color: var(--wood-dark); margin-bottom: 36px; letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .cat-card {
+      background: white; border-radius: 14px; padding: 22px 18px;
+      text-decoration: none; color: var(--foreground);
+      border: 1px solid var(--border); transition: all 0.3s ease;
+      text-align: center; position: relative; overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    .cat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--wood-brown), var(--wood-peru));
+    }
+    .cat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+      border-color: var(--wood-brown);
+    }
+    .cat-card .cat-num {
+      display: inline-block; width: 28px; height: 28px; line-height: 28px;
+      background: var(--wood-brown); color: white; border-radius: 50%;
+      font-size: 0.78rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .cat-card .cat-title-en { font-weight: 600; font-size: 0.88rem; color: var(--wood-dark); margin-bottom: 4px; line-height: 1.3; }
+    .cat-card .cat-title-ar { font-size: 0.82rem; color: var(--muted-foreground); font-family: 'Tajawal', sans-serif; line-height: 1.4; }
+
+    /* ── Main Content ── */
+    .assortment-main { padding: 60px 0 100px; background: #fafafa; }
+    .assortment-main .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+
+    /* ── Section Block ── */
+    .assortment-section {
+      margin-bottom: 72px; background: white; border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06); overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .section-header {
+      padding: 30px 36px 22px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, var(--wood-dark) 0%, var(--forest-green) 100%);
+      position: relative;
+    }
+    .section-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--wood-peru), var(--wood-brown));
+    }
+    .section-header h2 {
+      font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 4px; line-height: 1.2;
+    }
+    .section-header .ar-title {
+      font-size: 1.25rem; color: rgba(255,255,255,0.8);
+      font-family: 'Tajawal', sans-serif; margin-bottom: 10px;
+    }
+    .quality-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; padding: 5px 14px;
+      font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9);
+    }
+    .section-note {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px; padding: 10px 16px; margin-top: 10px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.85); font-style: italic;
+    }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; }
+    .product-table {
+      width: 100%; border-collapse: collapse; font-size: 0.87rem;
+    }
+    .product-table thead th {
+      background: var(--wood-beige); color: var(--wood-dark);
+      padding: 12px 14px; text-align: left; font-weight: 700;
+      white-space: nowrap; border-bottom: 2px solid var(--wood-brown);
+      font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    [dir="rtl"] .product-table thead th { text-align: right; }
+    .product-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.2s; }
+    .product-table tbody tr:hover { background: hsl(60, 56%, 97%); }
+    .product-table tbody tr:nth-child(even) { background: hsl(60, 56%, 98%); }
+    .product-table tbody tr:nth-child(even):hover { background: hsl(60, 56%, 95%); }
+    .product-table td {
+      padding: 11px 14px; color: var(--foreground);
+      vertical-align: middle; white-space: nowrap;
+    }
+    [dir="rtl"] .product-table td { text-align: right; }
+    .product-table .prod-name { font-weight: 600; color: var(--wood-dark); white-space: normal; min-width: 180px; }
+    .prod-ar { font-size: 0.8rem; color: var(--muted-foreground); font-family: 'Tajawal', sans-serif; }
+    .vb-code {
+      font-family: 'Courier New', monospace; font-size: 0.8rem;
+      background: hsl(60, 56%, 95%); padding: 3px 8px; border-radius: 6px;
+      color: var(--wood-dark); font-weight: 600; white-space: nowrap;
+    }
+    .treatment-pill {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 0.78rem; font-weight: 600; white-space: nowrap;
+      background: hsl(120, 30%, 92%); color: var(--forest-green); border: 1px solid hsl(120, 25%, 80%);
+    }
+    .treatment-pill.impreg { background: hsl(200, 50%, 92%); color: #1565a0; border-color: hsl(200,40%,80%); }
+    .treatment-pill.grundmalad { background: hsl(30, 60%, 92%); color: var(--wood-dark); border-color: hsl(30,40%,80%); }
+    .treatment-pill.mellan { background: hsl(45, 60%, 92%); color: hsl(35,70%,30%); border-color: hsl(45,40%,80%); }
+    .treatment-pill.untreated { background: hsl(0, 0%, 95%); color: #555; border-color: #ddd; }
+
+    /* ── Footnotes ── */
+    .table-footnotes {
+      padding: 14px 20px; background: hsl(60,56%,98%);
+      border-top: 1px solid var(--border); font-size: 0.79rem;
+      color: var(--muted-foreground); display: flex; flex-wrap: wrap; gap: 16px;
+    }
+    .table-footnotes span { display: flex; align-items: center; gap: 5px; }
+    .table-footnotes span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--wood-peru); flex-shrink: 0; }
+
+    /* ── RTL overrides ── */
+    [dir="rtl"] body { font-family: 'Tajawal', 'Cairo', sans-serif; }
+    [dir="rtl"] .assortment-hero h1,
+    [dir="rtl"] .assortment-hero p { font-family: 'Cairo', 'Tajawal', sans-serif; }
+    [dir="rtl"] .section-header h2 { font-family: 'Cairo', 'Tajawal', sans-serif; }
+    [dir="rtl"] .cat-card .cat-title-en { font-size: 0.8rem; }
+    [dir="rtl"] .cat-card .cat-title-ar { font-size: 0.9rem; font-weight: 600; color: var(--wood-dark); }
+    [dir="rtl"] .table-footnotes { direction: rtl; }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .assortment-hero h1 { font-size: 2.2rem; }
+      .assortment-hero p { font-size: 1rem; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .assortment-main .container { padding: 0 16px; }
+      .cat-nav .container { padding: 0 16px; }
+      .section-header { padding: 22px 20px 16px; }
+      .section-header h2 { font-size: 1.3rem; }
+      .table-footnotes { padding: 12px 16px; }
+      .lang-toggle-bar { top: 70px; right: 12px; }
+      [dir="rtl"] .lang-toggle-bar { left: 12px; right: auto; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation (same as index.html) -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <div class="logo-placeholder">
+          <img src="attached_assets/new_ramawood_logo.jpg" alt="RamaWood Logo" class="logo-img">
+        </div>
+      </div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html#hero" id="t-nav-home">Home</a></li>
+        <li><a href="index.html#about" id="t-nav-about">About</a></li>
+        <li><a href="index.html#products" id="t-nav-products">Products</a></li>
+        <li><a href="assortment.html" id="t-nav-assortment" style="color:var(--wood-brown);font-weight:700;">Assortment</a></li>
+        <li><a href="index.html#team" id="t-nav-team">Team</a></li>
+        <li><a href="index.html#impact" id="t-nav-impact">Impact</a></li>
+        <li><a href="index.html#contact" id="t-nav-contact">Contact</a></li>
+        <div class="mobile-lang-switcher">
+          <div class="language-switcher">
+            <button class="lang-btn mobile-lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn mobile-lang-btn" onclick="setLang('ar')">AR</button>
+          </div>
+        </div>
+      </ul>
+      <div class="nav-right">
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sticky Language Toggle -->
+  <div class="lang-toggle-bar" id="langToggleBar">
+    <button class="active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button id="btn-ar" onclick="setLang('ar')">AR</button>
+  </div>
+  <!-- Hero Section -->
+  <section class="assortment-hero">
+    <div class="hero-inner">
+      <h1 id="t-hero-title">The Right Timber — Right Here</h1>
+      <p id="t-hero-sub">Ramawood distributes a complete range of high-quality, certified timber products. Browse our full assortment below.</p>
+      <div class="pefc-badge"><i class="fas fa-leaf"></i> <span id="t-pefc">PEFC Certified Products Available</span></div>
+    </div>
+  </section>
+
+  <!-- Category Navigation Cards -->
+  <section class="cat-nav">
+    <div class="container">
+      <h2 id="t-browse">Browse by Category</h2>
+      <div class="cat-grid">
+        <a href="#sec1" class="cat-card"><div class="cat-num">1</div><div class="cat-title-en">Intermediate-coated Panel</div><div class="cat-title-ar">لوح مطلي جزئياً</div></a>
+        <a href="#sec2" class="cat-card"><div class="cat-num">2</div><div class="cat-title-en">Primer-painted Exterior Panels</div><div class="cat-title-ar">ألواح خارجية مطلية بطبقة أساسية</div></a>
+        <a href="#sec3" class="cat-card"><div class="cat-num">3</div><div class="cat-title-en">Exterior Panels</div><div class="cat-title-ar">ألواح خارجية</div></a>
+        <a href="#sec4" class="cat-card"><div class="cat-num">4</div><div class="cat-title-en">Impregnated Timber</div><div class="cat-title-ar">خشب مشرب</div></a>
+        <a href="#sec5" class="cat-card"><div class="cat-num">5</div><div class="cat-title-en">Brown-impregnated Timber</div><div class="cat-title-ar">خشب مشرب بني</div></a>
+        <a href="#sec6" class="cat-card"><div class="cat-num">6</div><div class="cat-title-en">Dimension-planed Timber</div><div class="cat-title-ar">خشب مخطط حسب الأبعاد</div></a>
+        <a href="#sec7" class="cat-card"><div class="cat-num">7</div><div class="cat-title-en">Sparse Panel, Batten, Underlayment &amp; Formwork</div><div class="cat-title-ar">لوح خفيف، لقط، ألواح تأسيس، خشب قوالب</div></a>
+        <a href="#sec8" class="cat-card"><div class="cat-num">8</div><div class="cat-title-en">Underlayment Board (Deromeluckan)</div><div class="cat-title-ar">لوح التأسيس ديروميلوكان</div></a>
+        <a href="#sec9" class="cat-card"><div class="cat-num">9</div><div class="cat-title-en">Strength-graded Timber</div><div class="cat-title-ar">خشب مصنف بالمتانة</div></a>
+      </div>
+    </div>
+  </section>
+  <!-- Main Sections -->
+  <main class="assortment-main">
+    <div class="container">
+
+      <!-- SECTION 1 -->
+      <div class="assortment-section" id="sec1">
+        <div class="section-header">
+          <h2>Intermediate-coated Panel</h2>
+          <div class="ar-title">لوح مطلي جزئياً</div>
+          <span class="quality-badge"><i class="fas fa-star"></i> Quality: G4-0 – G4-2</span>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th>
+                <th>Dimension / الأبعاد</th>
+                <th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th>
+                <th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th>
+                <th>Treatment / المعالجة</th>
+                <th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Finsågade klädselbrädor <span class="prod-ar">ألواح كسوة مسننة</span></td><td>22×45</td><td>23.5×50</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1086</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×70</td><td>23.5×75</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>308</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1087</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×95</td><td>23.5×100</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>264</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1088</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1089</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>154</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1090</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×170</td><td>23.5×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>144</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1091</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×195</td><td>23.5×200</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>120</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1092</span></td></tr>
+              <tr><td class="prod-name">Fasad lockläkt <span class="prod-ar">لقط واجهة</span></td><td>22×45</td><td>23.5×50</td><td>2.7–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1116</span></td></tr>
+              <tr><td class="prod-name">Profilerad lockläkt <span class="prod-ar">لقط مشكّل</span></td><td>22×45</td><td>25×50</td><td>2.7–5.4</td><td>Rillad</td><td>473</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1130</span></td></tr>
+              <tr><td class="prod-name">Falsad spårpanel <span class="prod-ar">لوح مخددّ بحافة</span></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1117</span></td></tr>
+              <tr><td class="prod-name"></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td><span class="vb-code">VB1118</span></td></tr>
+              <tr><td class="prod-name">Liggande falsad <span class="prod-ar">أفقي بحافة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Rakkantad falsad <span class="prod-ar">بحافة مستقيمة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Dubbelfas falsad <span class="prod-ar">بحافة مزدوجة</span></td><td>22×163</td><td>23.5×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>144</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span id="fn1a">Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span id="fn1b">* Order item / بضاعة بالطلب</span>
+          <span id="fn1c">*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 2 -->
+      <div class="assortment-section" id="sec2">
+        <div class="section-header">
+          <h2>Primer-painted Exterior Panels</h2>
+          <div class="ar-title">ألواح خارجية مطلية بطبقة أساسية</div>
+          <span class="quality-badge"><i class="fas fa-star"></i> Quality: G4-0 – G4-2</span>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>Treatment / المعالجة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Finsågade klädselbrädor 22mm <span class="prod-ar">ألواح كسوة 22مم</span></td><td>22×45</td><td>23.5×50</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2232</span></td></tr>
+              <tr><td></td><td>22×70</td><td>23.5×75</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>308</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2233</span></td></tr>
+              <tr><td></td><td>22×95</td><td>23.5×100</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>264</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2234</span></td></tr>
+              <tr><td></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2235</span></td></tr>
+              <tr><td></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>154</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2236</span></td></tr>
+              <tr><td></td><td>22×170</td><td>23.5×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>144</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2237</span></td></tr>
+              <tr><td></td><td>22×195</td><td>23.5×200</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>120</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2238</span></td></tr>
+              <tr><td class="prod-name">Finsågade klädselbrädor 28mm <span class="prod-ar">ألواح كسوة 28مم</span></td><td>28×70</td><td>32×75</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>252</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td></td><td>28×95</td><td>32×100</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>187</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1053</span></td></tr>
+              <tr><td></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>153</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1054</span></td></tr>
+              <tr><td></td><td>28×145</td><td>32×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>119</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1055</span></td></tr>
+              <tr><td></td><td>28×170</td><td>32×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>102</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1056</span></td></tr>
+              <tr><td></td><td>28×195</td><td>32×200</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>85</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1057</span></td></tr>
+              <tr><td class="prod-name">Finsågade klädselbrädor ändspontade <span class="prod-ar">ألواح كسوة بلسان نهائي</span></td><td>28×170</td><td>32×175</td><td>3.9</td><td>Finsågad/Rillad</td><td>102</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Fasad lockläkt <span class="prod-ar">لقط واجهة</span></td><td>22×45</td><td>23.5×50</td><td>2.7–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2351</span></td></tr>
+              <tr><td class="prod-name">Profilerad lockläkt <span class="prod-ar">لقط مشكّل</span></td><td>22×45</td><td>25×50</td><td>2.7–5.4</td><td>Rillad</td><td>473</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Falsad spårpanel <span class="prod-ar">لوح مخدد بحافة</span></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2354</span></td></tr>
+              <tr><td></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2355</span></td></tr>
+              <tr><td class="prod-name">Liggande falsad <span class="prod-ar">أفقي بحافة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Rakkantad falsad <span class="prod-ar">بحافة مستقيمة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Dubbelfas falsad <span class="prod-ar">بحافة مزدوجة</span></td><td>22×163</td><td>23.5×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>144</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Enkelfasspont <span class="prod-ar">لسان أحادي</span></td><td>22×120</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB1073</span></td></tr>
+              <tr><td class="prod-name">Dubbelfasspont <span class="prod-ar">لسان مزدوج</span></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB2360</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 3 -->
+      <div class="assortment-section" id="sec3">
+        <div class="section-header">
+          <h2>Exterior Panels</h2>
+          <div class="ar-title">ألواح خارجية</div>
+          <span class="quality-badge"><i class="fas fa-star"></i> Quality: G4-0 – G4-2</span>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Finsågade klädselbrädor <span class="prod-ar">ألواح كسوة مسننة</span></td><td>22×45</td><td>23.5×50</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="vb-code">VB2300</span></td></tr>
+              <tr><td></td><td>22×70</td><td>23.5×75</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>308</td><td><span class="vb-code">VB2301</span></td></tr>
+              <tr><td></td><td>22×95</td><td>23.5×100</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>264</td><td><span class="vb-code">VB2302</span></td></tr>
+              <tr><td></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="vb-code">VB2303</span></td></tr>
+              <tr><td></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="vb-code">VB2304</span></td></tr>
+              <tr><td></td><td>22×170</td><td>23.5×175</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>144</td><td><span class="vb-code">VB2305</span></td></tr>
+              <tr><td></td><td>22×195</td><td>23.5×200</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>120</td><td><span class="vb-code">VB2306</span></td></tr>
+              <tr><td class="prod-name">Fasad lockläkt <span class="prod-ar">لقط واجهة</span></td><td>22×45</td><td>23.5×50</td><td>2.7–5.4</td><td>Finsågad/Rillad</td><td>484</td><td><span class="vb-code">VB2319</span></td></tr>
+              <tr><td class="prod-name">Profilerad lockläkt <span class="prod-ar">لقط مشكّل</span></td><td>22×45</td><td>25×50</td><td>2.7–5.4</td><td>Rillad</td><td>473</td><td>—</td></tr>
+              <tr><td class="prod-name">Falsad spårpanel <span class="prod-ar">لوح مخدد بحافة</span></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="vb-code">V2322</span></td></tr>
+              <tr><td></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="vb-code">V2323</span></td></tr>
+              <tr><td class="prod-name">Rakkantad falsad <span class="prod-ar">بحافة مستقيمة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td><span class="vb-code">VB2016</span></td></tr>
+              <tr><td class="prod-name">Liggande falsad <span class="prod-ar">أفقي بحافة</span></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>168</td><td>—</td></tr>
+              <tr><td class="prod-name">Fjällpanel <span class="prod-ar">لوح فيال</span></td><td>17×120</td><td>19×125</td><td>3.0–5.4</td><td>Finsågad</td><td>252</td><td>—</td></tr>
+              <tr><td class="prod-name">Enkelfasspont <span class="prod-ar">لسان أحادي</span></td><td>22×120</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="vb-code">VB2313</span></td></tr>
+              <tr><td class="prod-name">Dubbelfasspont <span class="prod-ar">لسان مزدوج</span></td><td>22×120</td><td>23.5×125</td><td>3.0–5.4</td><td>Finsågad/Rillad</td><td>216</td><td><span class="vb-code">VB2328</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 4 -->
+      <div class="assortment-section" id="sec4">
+        <div class="section-header">
+          <h2>Impregnated Timber</h2>
+          <div class="ar-title">خشب مشرب</div>
+          <span class="quality-badge"><i class="fas fa-star"></i> Quality: G4-2 – G4-3</span>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>Treatment / المعالجة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Dimensionshyvlat <span class="prod-ar">خشب مخطط</span></td><td>45×45</td><td>47×50</td><td>3.0/3.6/4.2/4.8</td><td>Hyvlad</td><td>220</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>45×70</td><td>47×75</td><td>3.0/3.6/4.2/4.8</td><td>Hyvlad</td><td>150</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>70×70</td><td>75×75</td><td>3.0–5.4</td><td>Hyvlad</td><td>105</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">VB2979</span></td></tr>
+              <tr><td></td><td>95×95</td><td>100×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>55</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">VB2980</span></td></tr>
+              <tr><td class="prod-name">Finsågat <span class="prod-ar">خشب مسنن</span></td><td>22×45</td><td>23.5×50</td><td>3.0–4.8</td><td>Finsågad</td><td>462</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>22×70</td><td>23.5×75</td><td>3.0–4.8</td><td>Finsågad</td><td>315</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>22×95</td><td>23.5×100</td><td>3.0–4.8</td><td>Finsågad</td><td>231</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>22×120</td><td>23.5×125</td><td>3.0–4.8</td><td>Finsågad</td><td>189</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>22×145</td><td>23.5×150</td><td>3.0–5.4</td><td>Finsågad</td><td>147</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td class="prod-name">C14 Konstruktionsvirke <span class="prod-ar">خشب إنشائي C14</span></td><td>45×95</td><td>47×100</td><td>3.0/3.6/4.2/4.8</td><td>Hyvlad</td><td>110</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB2902</span></td></tr>
+              <tr><td></td><td>45×120</td><td>47×125</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>90</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB2903</span></td></tr>
+              <tr><td class="prod-name">C24 Konstruktionsvirke <span class="prod-ar">خشب إنشائي C24</span></td><td>45×145</td><td>47×150</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>70</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">V2924</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>60</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">V2925</span></td></tr>
+              <tr><td></td><td>45×195</td><td>47×200</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>50</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">V2926</span></td></tr>
+              <tr><td></td><td>45×220</td><td>47×225</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>50</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">V2927</span></td></tr>
+              <tr><td class="prod-name">Byggtimmer <span class="prod-ar">خشب بناء</span></td><td>120×140</td><td>125×150</td><td>3.0</td><td>Svarvad/Hyvlad</td><td>32</td><td><span class="treatment-pill impreg">Impreg. NTR/A</span></td><td><span class="vb-code">VB2991</span></td></tr>
+              <tr><td class="prod-name">Trall <span class="prod-ar">خشب أرضيات</span></td><td>22×95</td><td>25×100</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>231</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB2995</span></td></tr>
+              <tr><td></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Hyvlad</td><td>153</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3001</span></td></tr>
+              <tr><td></td><td>28×145</td><td>32×150</td><td>3.0–5.4</td><td>Hyvlad</td><td>119</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3004</span></td></tr>
+              <tr><td></td><td>34×70</td><td>38×75</td><td>3.0–4.8</td><td>Hyvlad</td><td>195</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>34×95</td><td>38×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>143</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3005</span></td></tr>
+              <tr><td></td><td>34×120</td><td>38×125</td><td>3.0–5.4</td><td>Hyvlad</td><td>117</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3008</span></td></tr>
+              <tr><td></td><td>34×145</td><td>38×150</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>91</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3010</span></td></tr>
+              <tr><td class="prod-name">Trall Norrlands <span class="prod-ar">أرضيات نورلاندس</span></td><td>28×95</td><td>32×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>187</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB2998</span></td></tr>
+              <tr><td class="prod-name">Trall Exklusiv <span class="prod-ar">أرضيات إكسكلوسيف</span></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Hyvlad</td><td>153</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB3000</span></td></tr>
+              <tr><td class="prod-name">Decking <span class="prod-ar">ديكنج</span></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Rillad/Hyvlad</td><td>153</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td><span class="vb-code">VB2034</span></td></tr>
+              <tr><td></td><td>34×145</td><td>38×150</td><td>3.6–5.4</td><td>Rillad/Hyvlad</td><td>91</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Överliggare <span class="prod-ar">عارضة علوية</span></td><td>45×120</td><td>47×125</td><td>3.0–4.8</td><td>Hyvlad</td><td>90</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>3.0–4.8</td><td>Hyvlad</td><td>70</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Spjäla <span class="prod-ar">خشب شرائح</span></td><td>28×45</td><td>32×50</td><td>3.0–4.8</td><td>Hyvlad</td><td>432</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+              <tr><td></td><td>34×45</td><td>38×50</td><td>3.0–4.8</td><td>Hyvlad</td><td>286</td><td><span class="treatment-pill impreg">Impreg. NTR/AB</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 5 -->
+      <div class="assortment-section" id="sec5">
+        <div class="section-header">
+          <h2>Brown-impregnated Timber</h2>
+          <div class="ar-title">خشب مشرب بني</div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>Treatment / المعالجة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Decking <span class="prod-ar">ديكنج</span></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Rillad/Hyvlad</td><td>153</td><td><span class="treatment-pill impreg">Impreg. Brun NTR/AB</span></td><td><span class="vb-code">VB2033</span></td></tr>
+              <tr><td class="prod-name">Spjäla <span class="prod-ar">خشب شرائح</span></td><td>28×45</td><td>32×50</td><td>3.0–4.8</td><td>Hyvlad</td><td>432</td><td><span class="treatment-pill impreg">Impreg. Brun NTR/AB</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Dimensionshyvlat <span class="prod-ar">خشب مخطط</span></td><td>70×70</td><td>75×75</td><td>3.0–5.4</td><td>Hyvlad</td><td>105</td><td><span class="treatment-pill impreg">Impreg. Brun NTR/A</span></td><td>—</td></tr>
+              <tr><td></td><td>95×95</td><td>100×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>55</td><td><span class="treatment-pill impreg">Impreg. Brun NTR/A</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+
+      <!-- SECTION 6 -->
+      <div class="assortment-section" id="sec6">
+        <div class="section-header">
+          <h2>Dimension-planed Timber</h2>
+          <div class="ar-title">خشب مخطط حسب الأبعاد</div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">C14-Väggreglar <span class="prod-ar">عوارض جدار C14</span></td><td>45×70</td><td>47×75</td><td>3.0–5.4</td><td>Hyvlad</td><td>168</td><td><span class="vb-code">VB1801</span></td></tr>
+              <tr><td></td><td>45×95</td><td>47×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>132</td><td><span class="vb-code">VB1802</span></td></tr>
+              <tr><td></td><td>45×120</td><td>47×125</td><td>3.0/3.6–5.4</td><td>Hyvlad</td><td>108</td><td><span class="vb-code">VB1803</span></td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>3.0/3.6/4.2/4.8/5.4</td><td>Hyvlad</td><td>84</td><td><span class="vb-code">VB1804</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>3.0/3.6/4.2–5.4</td><td>Hyvlad</td><td>72</td><td><span class="vb-code">VB1805</span></td></tr>
+              <tr><td></td><td>45×195</td><td>47×200</td><td>3.0/3.6/4.2/4.8–5.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1806</span></td></tr>
+              <tr><td class="prod-name">C14-Kortreglar <span class="prod-ar">عوارض قصيرة C14</span></td><td>45×70</td><td>47×75</td><td>2.5/2.7</td><td>Hyvlad</td><td>168</td><td><span class="vb-code">VB1801</span></td></tr>
+              <tr><td></td><td>45×95</td><td>47×100</td><td>2.5/2.7</td><td>Hyvlad</td><td>132</td><td><span class="vb-code">VB1802</span></td></tr>
+              <tr><td></td><td>45×120</td><td>47×125</td><td>2.5</td><td>Hyvlad</td><td>108</td><td><span class="vb-code">VB1803</span></td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>2.5</td><td>Hyvlad</td><td>84</td><td><span class="vb-code">VB1804</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>2.5</td><td>Hyvlad</td><td>72</td><td><span class="vb-code">VB1805</span></td></tr>
+              <tr><td class="prod-name">Kvintareglar G4-0–G4-2 <span class="prod-ar">عوارض كوينتا</span></td><td>34×45</td><td>36×50</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>330</td><td><span class="vb-code">VB0810</span></td></tr>
+              <tr><td></td><td>34×70</td><td>36×75</td><td>3.0/3.6/4.2/4.5/4.8</td><td>Hyvlad</td><td>210</td><td><span class="vb-code">VB0811</span></td></tr>
+              <tr><td></td><td>34×95</td><td>36×100</td><td>3.6/4.2/4.8</td><td>Hyvlad</td><td>165</td><td><span class="vb-code">VB0812</span></td></tr>
+              <tr><td></td><td>34×120</td><td>36×125</td><td>3.6/4.2/4.8/5.4</td><td>Hyvlad</td><td>135</td><td><span class="vb-code">VB0813</span></td></tr>
+              <tr><td></td><td>34×145</td><td>36×150</td><td>3.6/4.2/4.8/5.4</td><td>Hyvlad</td><td>105</td><td><span class="vb-code">VB0814</span></td></tr>
+              <tr><td></td><td>45×45</td><td>47×50</td><td>3.0–5.4</td><td>Hyvlad</td><td>264</td><td><span class="vb-code">VB1822</span></td></tr>
+              <tr><td class="prod-name">Kortreglar G4-0–G4-3 <span class="prod-ar">عوارض قصيرة</span></td><td>45×45</td><td>47×50</td><td>2.5</td><td>Hyvlad</td><td>264</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 7 -->
+      <div class="assortment-section" id="sec7">
+        <div class="section-header">
+          <h2>Sparse Panel, Batten, Underlayment &amp; Formwork</h2>
+          <div class="ar-title">لوح خفيف، لقط، ألواح تأسيس، خشب قوالب</div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Glespanel G4-3 <span class="prod-ar">لوح خفيف</span></td><td>21×95</td><td>22×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>264</td><td><span class="vb-code">VB0805</span></td></tr>
+              <tr><td></td><td>28×70</td><td>32×75</td><td>3.0–5.4</td><td>Hyvlad</td><td>252</td><td><span class="vb-code">VB0807</span></td></tr>
+              <tr><td></td><td>28×95</td><td>32×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>187</td><td><span class="vb-code">VB0808</span></td></tr>
+              <tr><td class="prod-name">Glespanel Ändspont G4-3 <span class="prod-ar">لوح خفيف بلسان نهائي</span></td><td>28×70</td><td>32×75</td><td>Kvastad</td><td>Hyvlad</td><td>252</td><td>—</td></tr>
+              <tr><td class="prod-name">Läkt G4-0–G4-3 <span class="prod-ar">لقط</span></td><td>11×48</td><td>11×48</td><td>3.0–5.4</td><td>Egaliserad</td><td>440</td><td>—</td></tr>
+              <tr><td></td><td>25×50</td><td>25×50</td><td>3.0–5.4</td><td>Egaliserad</td><td>528</td><td><span class="vb-code">VB1108</span></td></tr>
+              <tr><td></td><td>25×38</td><td>25×38</td><td>3.0–5.4</td><td>Egaliserad</td><td>720</td><td><span class="vb-code">VB1107</span></td></tr>
+              <tr><td class="prod-name">Trekantsläkt <span class="prod-ar">لقط مثلثي</span></td><td>45×45</td><td>47×50</td><td>3.0–5.4</td><td>Sågad</td><td>264</td><td>—</td></tr>
+              <tr><td class="prod-name">Underlagsspont G4-3 <span class="prod-ar">ألواح تأسيس</span></td><td>17×95</td><td>19×100</td><td>3.0–5.4</td><td>Rillad/Hyvlad</td><td>352</td><td><span class="vb-code">VB1020</span></td></tr>
+              <tr><td></td><td>20×95</td><td>22×100</td><td>3.0–5.4</td><td>Rillad/Hyvlad</td><td>286</td><td><span class="vb-code">VB1023</span></td></tr>
+              <tr><td class="prod-name">Underlagsspont Ändspont G4-3 <span class="prod-ar">ألواح تأسيس بلسان نهائي</span></td><td>20×120</td><td>22×100</td><td>Kvastad</td><td>Rillad/Hyvlad</td><td>234</td><td><span class="vb-code">VB1033</span></td></tr>
+              <tr><td></td><td>23×95</td><td>25×100</td><td>Kvastad</td><td>Rillad/Hyvlad</td><td>286</td><td><span class="vb-code">VB1035</span></td></tr>
+              <tr><td class="prod-name">Hyvelspont G4-3 <span class="prod-ar">لوح هيفل</span></td><td>28×120</td><td>32×125</td><td>3.0–5.4</td><td>Hyvlad</td><td>144</td><td>—</td></tr>
+              <tr><td class="prod-name">Formvirke G4-3–G4-4 <span class="prod-ar">خشب قوالب</span></td><td>21×95</td><td>—</td><td>Kvastad</td><td>Hyvlad</td><td>264</td><td><span class="vb-code">VB1207</span></td></tr>
+              <tr><td></td><td>45×95</td><td>—</td><td>Kvastad</td><td>Hyvlad</td><td>132</td><td><span class="vb-code">VB1209</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+      <!-- SECTION 8 -->
+      <div class="assortment-section" id="sec8">
+        <div class="section-header">
+          <h2>Underlayment Board (Deromeluckan)</h2>
+          <div class="ar-title">لوح التأسيس ديروميلوكان</div>
+          <div class="section-note">* Order item from production — module lengths 1.8–5.1 / بضاعة بالطلب من الإنتاج — الأطوال 1.8–5.1</div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>Treatment / المعالجة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">Standard C14 Obehandlad <span class="prod-ar">غير معالج</span></td><td>17×540</td><td>2.4/3.6/4.2</td><td>Rillad/Hyvlad</td><td>60</td><td><span class="treatment-pill untreated">Untreated</span></td><td><span class="vb-code">VB3200</span></td></tr>
+              <tr><td></td><td>20×540</td><td>2.4/3.6/4.2</td><td>Rillad/Hyvlad</td><td>54</td><td><span class="treatment-pill untreated">Untreated</span></td><td><span class="vb-code">VB3201</span></td></tr>
+              <tr><td></td><td>23×540</td><td>2.4/3.6/4.2</td><td>Rillad/Hyvlad</td><td>48</td><td><span class="treatment-pill untreated">Untreated</span></td><td><span class="vb-code">VB3202</span></td></tr>
+              <tr><td class="prod-name">Standard C14 Mellanstruken <span class="prod-ar">مطلي جزئياً</span></td><td>17×540</td><td>3.6</td><td>Rillad/Hyvlad</td><td>60</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+              <tr><td></td><td>20×540</td><td>3.6</td><td>Rillad/Hyvlad</td><td>54</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+              <tr><td></td><td>23×540</td><td>3.6</td><td>Rillad/Hyvlad</td><td>48</td><td><span class="treatment-pill mellan">Mellanstruken</span></td><td>—</td></tr>
+              <tr><td class="prod-name">Standard C14 Grundmålad <span class="prod-ar">مطلي بطبقة أساسية</span></td><td>17×540</td><td>2.4/3.15</td><td>Rillad/Hyvlad</td><td>60</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB—</span></td></tr>
+              <tr><td></td><td>20×540</td><td>Not stocked</td><td>Rillad/Hyvlad</td><td>54</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB—</span></td></tr>
+              <tr><td></td><td>23×540</td><td>3.6/4.2</td><td>Rillad/Hyvlad</td><td>48</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB—</span></td></tr>
+              <tr><td class="prod-name">Takfot C14 Grundmålad <span class="prod-ar">طرف سقف مطلي</span></td><td>17×540</td><td>Not stocked</td><td>Rillad/Hyvlad</td><td>60</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB3203</span></td></tr>
+              <tr><td></td><td>20×540</td><td>Not stocked</td><td>Rillad/Hyvlad</td><td>54</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB3204</span></td></tr>
+              <tr><td></td><td>23×540</td><td>Not stocked</td><td>Rillad/Hyvlad</td><td>48</td><td><span class="treatment-pill grundmalad">Grundmålad</span></td><td><span class="vb-code">VB3205</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>** Special order</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+
+      <!-- SECTION 9 -->
+      <div class="assortment-section" id="sec9">
+        <div class="section-header">
+          <h2>Strength-graded Timber</h2>
+          <div class="ar-title">خشب مصنف بالمتانة</div>
+        </div>
+        <div class="table-wrap">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Product / المنتج</th><th>Dimension / الأبعاد</th><th>Nominal Size / المقاس الاسمي</th>
+                <th>Module Lengths / الأطوال المعيارية</th><th>Surface / السطح</th>
+                <th>Pcs/pkg / قطعة/حزمة</th><th>VilmaBas No. / رقم VilmaBas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="prod-name">C24 Konstruktionsvirke <span class="prod-ar">خشب إنشائي C24</span></td><td>45×70</td><td>47×75</td><td>3.0–5.4</td><td>Hyvlad</td><td>168</td><td><span class="vb-code">VB1820</span></td></tr>
+              <tr><td></td><td>45×95</td><td>47×100</td><td>3.0–5.4</td><td>Hyvlad</td><td>132</td><td><span class="vb-code">VB1971</span></td></tr>
+              <tr><td></td><td>45×120</td><td>47×125</td><td>3.0–5.4</td><td>Hyvlad</td><td>108</td><td><span class="vb-code">VB1972</span></td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>3.0–5.4</td><td>Hyvlad</td><td>84</td><td><span class="vb-code">VB1973</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>3.0–5.4</td><td>Hyvlad</td><td>72</td><td><span class="vb-code">VB1974</span></td></tr>
+              <tr><td></td><td>45×195</td><td>47×200</td><td>3.0–5.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1975</span></td></tr>
+              <tr><td></td><td>45×220</td><td>47×225</td><td>3.0–5.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1976</span></td></tr>
+              <tr><td></td><td>45×245</td><td>47×250</td><td>3.0–5.4</td><td>Hyvlad</td><td>48</td><td><span class="vb-code">VB1977</span></td></tr>
+              <tr><td class="prod-name">C24 Fingerskarvat <span class="prod-ar">C24 إصبعي</span></td><td>45×120</td><td>47×125</td><td>6.0</td><td>Hyvlad</td><td>96</td><td><span class="vb-code">VB1979</span></td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>6.0/6.6/7.2/7.8</td><td>Hyvlad</td><td>84</td><td><span class="vb-code">VB1980</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>6.0/6.6/7.2</td><td>Hyvlad</td><td>72</td><td><span class="vb-code">VB1981</span></td></tr>
+              <tr><td></td><td>45×195</td><td>47×200</td><td>6.0/6.6/7.2/7.8/8.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1982</span></td></tr>
+              <tr><td></td><td>45×220</td><td>47×225</td><td>6.0/6.6/7.2/7.8/8.4/9.0/10.0</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1983</span></td></tr>
+              <tr><td class="prod-name">C30 Konstruktionsvirke <span class="prod-ar">خشب إنشائي C30</span></td><td>45×120</td><td>47×125</td><td>5.4</td><td>Hyvlad</td><td>108</td><td><span class="vb-code">VB1960</span></td></tr>
+              <tr><td></td><td>45×145</td><td>47×150</td><td>3.6/4.2/4.8/5.4</td><td>Hyvlad</td><td>84</td><td><span class="vb-code">VB1961</span></td></tr>
+              <tr><td></td><td>45×170</td><td>47×175</td><td>3.6/4.2/4.8/5.4</td><td>Hyvlad</td><td>72</td><td><span class="vb-code">VB1962</span></td></tr>
+              <tr><td></td><td>45×195</td><td>47×200</td><td>3.6/4.2/4.8–5.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1963</span></td></tr>
+              <tr><td></td><td>45×220</td><td>47×225</td><td>3.6/4.2/4.8–5.4</td><td>Hyvlad</td><td>60</td><td><span class="vb-code">VB1964</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnotes">
+          <span>Package contents may vary / قد يتفاوت محتوى الحزمة</span>
+          <span>* Order item / بضاعة بالطلب</span>
+          <span>*** Not CMP / غير متوفر في CMP</span>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo-placeholder">
+            <img src="attached_assets/new_ramawood_logo.jpg" alt="RamaWood Logo" class="logo-img">
+          </div>
+          <p id="t-footer-desc">Trusted Swedish company for global wood trading</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4 id="t-footer-company">Company</h4>
+            <ul>
+              <li><a href="index.html#about" id="t-f-about">About</a></li>
+              <li><a href="index.html#products" id="t-f-products">Products</a></li>
+              <li><a href="assortment.html" id="t-f-assortment">Assortment</a></li>
+              <li><a href="index.html#team" id="t-f-team">Team</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4 id="t-footer-contact">Contact</h4>
+            <ul>
+              <li><a href="index.html#contact" id="t-f-contact">Contact Us</a></li>
+              <li><a href="https://wa.me/46762157044" target="_blank" id="t-f-whatsapp">WhatsApp</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 RamaWood. <span id="t-footer-rights">All rights reserved.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile Nav ──
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.nav-menu a').forEach(a => {
+      a.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // ── Language System ──
+    const T = {
+      en: {
+        'nav-home': 'Home', 'nav-about': 'About', 'nav-products': 'Products',
+        'nav-assortment': 'Assortment', 'nav-team': 'Team', 'nav-impact': 'Impact', 'nav-contact': 'Contact',
+        'hero-title': 'The Right Timber — Right Here',
+        'hero-sub': 'Ramawood distributes a complete range of high-quality, certified timber products. Browse our full assortment below.',
+        'pefc': 'PEFC Certified Products Available',
+        'browse': 'Browse by Category',
+        'footer-desc': 'Trusted Swedish company for global wood trading',
+        'footer-company': 'Company', 'footer-contact': 'Contact',
+        'footer-rights': 'All rights reserved.',
+        'f-about': 'About', 'f-products': 'Products', 'f-assortment': 'Assortment',
+        'f-team': 'Team', 'f-contact': 'Contact Us', 'f-whatsapp': 'WhatsApp',
+      },
+      ar: {
+        'nav-home': 'الرئيسية', 'nav-about': 'عن الشركة', 'nav-products': 'المنتجات',
+        'nav-assortment': 'تشكيلة الأخشاب', 'nav-team': 'الفريق', 'nav-impact': 'تأثيرنا', 'nav-contact': 'اتصل بنا',
+        'hero-title': 'الخشب الصحيح — هنا',
+        'hero-sub': 'تقدم راماوود مجموعة كاملة من منتجات الأخشاب عالية الجودة والمعتمدة. تصفح تشكيلتنا الكاملة أدناه.',
+        'pefc': 'منتجات معتمدة PEFC متاحة',
+        'browse': 'تصفح حسب الفئة',
+        'footer-desc': 'شركة سويدية موثوقة لتجارة الأخشاب العالمية',
+        'footer-company': 'الشركة', 'footer-contact': 'اتصل بنا',
+        'footer-rights': 'جميع الحقوق محفوظة.',
+        'f-about': 'عن الشركة', 'f-products': 'المنتجات', 'f-assortment': 'تشكيلة الأخشاب',
+        'f-team': 'الفريق', 'f-contact': 'اتصل بنا', 'f-whatsapp': 'واتساب',
+      }
+    };
+
+    const idMap = {
+      't-nav-home': 'nav-home', 't-nav-about': 'nav-about', 't-nav-products': 'nav-products',
+      't-nav-assortment': 'nav-assortment', 't-nav-team': 'nav-team',
+      't-nav-impact': 'nav-impact', 't-nav-contact': 'nav-contact',
+      't-hero-title': 'hero-title', 't-hero-sub': 'hero-sub', 't-pefc': 'pefc',
+      't-browse': 'browse',
+      't-footer-desc': 'footer-desc', 't-footer-company': 'footer-company',
+      't-footer-contact': 'footer-contact', 't-footer-rights': 'footer-rights',
+      't-f-about': 'f-about', 't-f-products': 'f-products', 't-f-assortment': 'f-assortment',
+      't-f-team': 'f-team', 't-f-contact': 'f-contact', 't-f-whatsapp': 'f-whatsapp',
+    };
+
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.title = lang === 'ar' ? 'تشكيلة الأخشاب | راماوود' : 'Timber Assortment | RamaWood';
+      for (const [id, key] of Object.entries(idMap)) {
+        const el = document.getElementById(id);
+        if (el && T[lang] && T[lang][key]) el.textContent = T[lang][key];
+      }
+      document.querySelectorAll('.lang-btn, #btn-en, #btn-ar').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+      // also update mobile lang buttons
+      document.querySelectorAll('.mobile-lang-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('onclick') === "setLang('" + lang + "')");
+      });
+      // Store preference
+      localStorage.setItem('rw_lang', lang);
+    }
+
+    // On load, apply saved language
+    document.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('rw_lang') || 'en';
+      if (saved === 'ar') setLang('ar');
+    });
+  </script>
+</body>
+</html>
